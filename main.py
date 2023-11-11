@@ -18,6 +18,6 @@ if __name__ == "__main__":
     games_dict = load_games_list()
     desired_game_name = input("Please enter a game name: ")
     if desired_game_name in games_dict:
-        print(gameNameToRow[name])
+        print(games_dict[name])
     else:
         print("Name not found.")
