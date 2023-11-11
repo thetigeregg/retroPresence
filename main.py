@@ -1,10 +1,22 @@
 import csv
 import unidecode
 from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.completion import Completer, Completion
 
 
 csv_path = "./data/games-list.csv"
+
+
+class GameNameCompleter(Completer):
+    def get_completions(self, document, complete_event):
+        word = document.text_before_cursor.lower()
+        for game_name in get_game_name_suggestions():
+            if word.startswith("."):
+                if game_name.startswith(word):
+                    yield Completion(game_name, start_position=-len(word))
+            else:
+                if game_name.lstrip(".").startswith(word):
+                    yield Completion(game_name, start_position=-len(word))
 
 
 def normalize_game_name(name):
@@ -29,7 +41,7 @@ def get_game_name_suggestions():
 
 
 if __name__ == "__main__":
-    game_name_completer = WordCompleter(get_game_name_suggestions(), ignore_case=True)
+    game_name_completer = GameNameCompleter()
     desired_game_name = prompt(
         "Please enter a game name: ", completer=game_name_completer
     )
