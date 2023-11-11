@@ -41,3 +41,4 @@ if __name__ == "__main__":
     desired_game_name = prompt(
         "Please enter a game name: ", completer=game_name_completer
     )
+    game_data = load_games_list()[normalize_game_name(desired_game_name)]
