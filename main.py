@@ -11,12 +11,8 @@ class GameNameCompleter(Completer):
     def get_completions(self, document, complete_event):
         word = document.text_before_cursor.lower()
         for game_name in get_game_name_suggestions():
-            if word.startswith("."):
-                if game_name.startswith(word):
-                    yield Completion(game_name, start_position=-len(word))
-            else:
-                if game_name.lstrip(".").startswith(word):
-                    yield Completion(game_name, start_position=-len(word))
+            if word in game_name:
+                yield Completion(game_name, start_position=-len(word))
 
 
 def normalize_game_name(name):
